@@ -17,9 +17,7 @@ const FILES_TO_CACHE = [
   "./icons/icon-384x384.png",
   "./icons/icon-512x512.png"
 ];
-
 self.addEventListener("install", function(event) {
-
   event.waitUntil(
     caches.open(CACHE_NAME).then(function(cache) {
       console.log('installing cache : ' + CACHE_NAME)
@@ -27,9 +25,7 @@ self.addEventListener("install", function(event) {
     })
   );
 });
-
 self.addEventListener("fetch", function(event) {
-
   if (event.request.url.includes("/api/")) {
     event.respondWith(
       caches.open(DATA_CACHE_NAME).then(cache => {
@@ -42,7 +38,6 @@ self.addEventListener("fetch", function(event) {
             return response;
           })
           .catch(err => {
-           
             return cache.match(event.request);
           });
       }).catch(err => console.log(err))
@@ -62,15 +57,12 @@ self.addEventListener("fetch", function(event) {
     })
   );
 });
-
 self.addEventListener('activate', function (e) {
   e.waitUntil(
     caches.keys().then(function (keyList) {
-
       let cacheKeeplist = keyList.filter(function (key) {
         return key.indexOf(APP_PREFIX);
       })
-    
       cacheKeeplist.push(CACHE_NAME);
       return Promise.all(keyList.map(function (key, i) {
         if (cacheKeeplist.indexOf(key) === -1) {

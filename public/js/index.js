@@ -1,13 +1,11 @@
 let transactions = [];
 let myChart;
-
 fetch("/api/transaction")
   .then((response) => {
     return response.json();
   })
   .then((data) => {
     transactions = data;
-
     populateTotal();
     populateTable();
     populateChart();
@@ -23,9 +21,7 @@ function populateTotal() {
 function populateTable() {
   let tbody = document.querySelector("#tbody");
   tbody.innerHTML = "";
-
   transactions.forEach((transaction) => {
-
     let tr = document.createElement("tr");
     tr.innerHTML = `
       <td>${transaction.name}</td>
